@@ -33,26 +33,20 @@ l=0
 
 start = time.time()
 gravity = 9.8/100.0
-print limit_x, limit_y
+
 
 # Updating
 #>1.5 for with gravity, >0.3  + l<25 for w/o gravity
  
 while np.amax(abs(velocity)) > 1.5 and l<50:
-	# position += 10* vel for gravity case.
+	# position += 10* vel for gravity case as well.
 	position += 10*velocity # Nice large speed - dies down quickly enough!
 	velocity*=0.9
 	# Only toggle the below velocity changes in case of gravity 
 	velocity[:,1] -= gravity
-	
-
-
-	# pair_dist = d.cdist(position, position)
 
 	pair_dist = d.cdist(position, position)
 	pair_d = np.triu(pair_dist<=2*radius, k=1) # k=1 to exclude the diagonal
-	# print np.nonzero(pair_d)
-	# print zip(*np.nonzero(pair_d))
 	for i, j in zip(*np.nonzero(pair_d)):
 		# If two particles are too close then swap velocities
 		# It's a bad hack but it'll work for now.
@@ -154,6 +148,8 @@ den1 = []
 for item in den:
 	if item>5:
 		den1.append(item)
+
+# Don't know which histogram will work best
 
 hist(den1, 20, 'Histogram showing density distribution of simulated distribution', 'Density of ball bearings', 'Frequency')
 plt.close()
