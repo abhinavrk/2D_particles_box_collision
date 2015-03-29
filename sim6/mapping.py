@@ -5,14 +5,17 @@ Generate the same plots as for the actual images.
 depth = width = 128
 position = np.loadtxt('positions.txt', delimiter = ',')
 centers = position
-name = 'hexpacking' #Name of file
+name = 'hexpacking' #Name of file - also add path if you want to store it in some other folder
+
 #X-sorted centers
 depth_sort = qsort(centers, 0) 
+
 #Y-sorted centers
 width_sort = qsort(centers, 1)
 
 #Net Total Density Distribution in x and y
 denxy = density(depth_sort, depth, width, 10, 10)
+
 #Profiles in x and y direction
 depthsx, profilex = profile(depth_sort, depth, 0)
 depthsy, profiley = profile(width_sort, width, 1)
@@ -37,17 +40,21 @@ plt.plot(depthsy, profiley)
 plt.savefig(name+"profiles.png")
 plt.close()
 print entropy1
+
 #-------------sparse-------------------
 mask = position[:,1] > depth/2.
 centers = position[mask] 
 name = 'hexpackingsparse'
+
 #X-sorted centers
 depth_sort = qsort(centers, 0) 
+
 #Y-sorted centers
 width_sort = qsort(centers, 1)
 
 #Net Total Density Distribution in x and y
 denxy = density(depth_sort, depth, width, 10, 10)
+
 #Profiles in x and y direction
 depthsx, profilex = profile(depth_sort, depth, 0)
 depthsy, profiley = profile(width_sort, width, 1)
